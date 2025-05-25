@@ -5,7 +5,7 @@
 export async function fetchDashboardStats() {
   // Simulate network delay for streaming demonstration
   await new Promise(resolve => setTimeout(resolve, 500));
-  
+
   return {
     totalReports: 32,
     newReportsPercent: 15,
@@ -73,7 +73,7 @@ export async function fetchDashboardStats() {
 export async function fetchRecentReports() {
   // Simulate network delay for streaming demonstration
   await new Promise(resolve => setTimeout(resolve, 700));
-  
+
   return [
     {
       id: "report-001",
@@ -142,8 +142,8 @@ export async function fetchRecentReports() {
 // Mock report data with multiple data sources
 export async function fetchReportById(reportId: string) {
   // Simulate network delay for streaming demonstration
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise(resolve => setTimeout(resolve, 3000));
+
   // Return different data based on reportId
   const baseReport = {
     id: reportId,
@@ -156,7 +156,7 @@ export async function fetchReportById(reportId: string) {
       email: "alex@example.com",
     },
   };
-  
+
   if (reportId === "report-001") {
     return {
       ...baseReport,
@@ -307,6 +307,174 @@ export async function fetchReportById(reportId: string) {
   }
 }
 
+export async function fetchReportById2(reportId: string) {
+  // Simulate network delay for streaming demonstration
+  await new Promise(resolve => setTimeout(resolve, 10000));
+
+  // Return different data based on reportId
+  const baseReport = {
+    id: reportId,
+    title: "Performance Report",
+    description: "Key performance indicators and metrics",
+    createdAt: "2023-09-15T10:30:00Z",
+    updatedAt: "2023-09-17T14:45:00Z",
+    author: {
+      name: "Alex Thompson",
+      email: "alex@example.com",
+    },
+  };
+
+  if (reportId === "report-001") {
+    return {
+      ...baseReport,
+      title: "Q2 Sales Performance",
+      description: "Quarterly sales performance across all regions",
+      dataSources: [
+        { id: "ds-001", name: "Sales API", type: "api" },
+        { id: "ds-002", name: "CRM Database", type: "database" },
+        { id: "ds-003", name: "Analytics Platform", type: "api" }
+      ],
+      sections: [
+        {
+          id: "section-1",
+          title: "Revenue Overview",
+          dataSource: "ds-001",
+          charts: [
+            {
+              id: "chart-1",
+              type: "bar",
+              title: "Monthly Revenue",
+              dataSource: "ds-001",
+              data: [
+                { name: "Jan", value: 1200 },
+                { name: "Feb", value: 1900 },
+                { name: "Mar", value: 2400 },
+                { name: "Apr", value: 1800 },
+                { name: "May", value: 2800 },
+                { name: "Jun", value: 3200 },
+              ],
+            },
+            {
+              id: "chart-2",
+              type: "line",
+              title: "Revenue Trend",
+              dataSource: "ds-003",
+              data: [
+                { name: "Week 1", value: 300 },
+                { name: "Week 2", value: 500 },
+                { name: "Week 3", value: 700 },
+                { name: "Week 4", value: 900 },
+                { name: "Week 5", value: 800 },
+                { name: "Week 6", value: 1100 },
+                { name: "Week 7", value: 1300 },
+                { name: "Week 8", value: 1500 },
+              ],
+            },
+          ],
+        },
+        {
+          id: "section-2",
+          title: "Regional Breakdown",
+          dataSource: "ds-002",
+          charts: [
+            {
+              id: "chart-3",
+              type: "pie",
+              title: "Sales by Region",
+              dataSource: "ds-002",
+              data: [
+                { name: "North America", value: 4200 },
+                { name: "Europe", value: 3800 },
+                { name: "Asia", value: 3100 },
+                { name: "South America", value: 1800 },
+                { name: "Africa", value: 1200 },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+  } else if (reportId === "report-002") {
+    return {
+      ...baseReport,
+      title: "Marketing Campaign ROI",
+      description: "Return on investment for recent marketing campaigns",
+      dataSources: [
+        { id: "ds-004", name: "Marketing Analytics", type: "api" },
+        { id: "ds-005", name: "Ad Platform", type: "api" }
+      ],
+      sections: [
+        {
+          id: "section-1",
+          title: "Campaign Performance",
+          dataSource: "ds-004",
+          charts: [
+            {
+              id: "chart-1",
+              type: "bar",
+              title: "Campaign Costs",
+              dataSource: "ds-004",
+              data: [
+                { name: "Social Media", value: 2200 },
+                { name: "Email", value: 1500 },
+                { name: "Content", value: 3000 },
+                { name: "PPC", value: 4500 },
+                { name: "Influencers", value: 3200 },
+              ],
+            },
+            {
+              id: "chart-2",
+              type: "line",
+              title: "ROI Over Time",
+              dataSource: "ds-005",
+              data: [
+                { name: "Week 1", value: 1.2 },
+                { name: "Week 2", value: 1.8 },
+                { name: "Week 3", value: 2.3 },
+                { name: "Week 4", value: 2.8 },
+                { name: "Week 5", value: 3.1 },
+                { name: "Week 6", value: 3.5 },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+  } else {
+    return {
+      ...baseReport,
+      title: "Custom Report",
+      description: "Custom report with sample data",
+      dataSources: [
+        { id: "ds-001", name: "Sample Data", type: "api" }
+      ],
+      sections: [
+        {
+          id: "section-1",
+          title: "Overview",
+          dataSource: "ds-001",
+          charts: [
+            {
+              id: "chart-1",
+              type: "bar",
+              title: "Sample Bar Chart",
+              dataSource: "ds-001",
+              data: [
+                { name: "Category A", value: 1200 },
+                { name: "Category B", value: 1900 },
+                { name: "Category C", value: 2400 },
+                { name: "Category D", value: 1800 },
+                { name: "Category E", value: 2800 },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+  }
+}
+
+
 // Stream-enabled data fetch function for large datasets
 export async function* streamReportData(reportId: string) {
   // Initial data burst
@@ -315,36 +483,36 @@ export async function* streamReportData(reportId: string) {
     progress: 10,
     message: "Initializing data fetch",
   };
-  
+
   await new Promise(resolve => setTimeout(resolve, 500));
-  
+
   yield {
     status: "loading",
     progress: 30,
     message: "Fetching metadata",
   };
-  
+
   await new Promise(resolve => setTimeout(resolve, 500));
-  
+
   yield {
     status: "loading",
     progress: 50,
     message: "Processing chart data",
   };
-  
+
   await new Promise(resolve => setTimeout(resolve, 700));
-  
+
   yield {
     status: "loading",
     progress: 80,
     message: "Finalizing report",
   };
-  
+
   await new Promise(resolve => setTimeout(resolve, 300));
-  
+
   // Final data payload
   const report = await fetchReportById(reportId);
-  
+
   yield {
     status: "complete",
     progress: 100,
@@ -356,7 +524,7 @@ export async function* streamReportData(reportId: string) {
 export async function fetchDataSources() {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
-  
+
   return [
     { id: "ds-001", name: "Sales API", type: "api" },
     { id: "ds-002", name: "CRM Database", type: "database" },

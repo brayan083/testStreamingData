@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import Link from 'next/link';
 import { ArrowRight, BarChart3, FileText, Plus } from 'lucide-react';
 
@@ -17,19 +16,19 @@ export default function Home() {
             <span>DataViz Reporter</span>
           </div>
           <nav className="ml-auto flex gap-4 sm:gap-6">
-            <Link 
+            <Link
               href="/reports"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               Reports
             </Link>
-            <Link 
+            <Link
               href="/templates"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               Templates
             </Link>
-            <Link 
+            <Link
               href="/settings"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
@@ -72,11 +71,9 @@ export default function Home() {
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">Dashboard Overview</h2>
               <p className="text-muted-foreground">Your report generation metrics at a glance</p>
             </div>
-            
-            <Suspense fallback={<div className="h-[200px] w-full rounded-lg bg-muted animate-pulse" />}>
-              <DashboardStats />
-            </Suspense>
-            
+
+            <DashboardStats />
+
             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <Card>
                 <CardHeader>
@@ -111,16 +108,14 @@ export default function Home() {
                   </Link>
                 </CardFooter>
               </Card>
-              
+
               <Card>
                 <CardHeader>
                   <CardTitle>Recent Reports</CardTitle>
                   <CardDescription>Your most recent work</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Suspense fallback={<div className="h-[150px] w-full rounded-lg bg-muted animate-pulse" />}>
-                    <RecentReports />
-                  </Suspense>
+                  <RecentReports />
                 </CardContent>
                 <CardFooter>
                   <Link href="/reports" className="text-sm text-muted-foreground hover:text-primary">
@@ -128,7 +123,7 @@ export default function Home() {
                   </Link>
                 </CardFooter>
               </Card>
-              
+
               <Card>
                 <CardHeader>
                   <CardTitle>Getting Started</CardTitle>

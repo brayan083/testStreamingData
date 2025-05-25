@@ -8,51 +8,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { BarChartComponent } from "@/components/charts/bar-chart";
 import { LineChartComponent } from "@/components/charts/line-chart";
 import { PieChartComponent } from "@/components/charts/pie-chart";
-import { streamReportData } from "@/lib/data";
 
-export function ReportContent({ reportId }: { reportId: string }) {
+export function ReportContent({ datos }: { datos: Array<any> }) {
   const [sections, setSections] = useState<any[]>([]);
-  const [loadingCharts, setLoadingCharts] = useState<Set<string>>(new Set());
+
+  console.log("sections", sections);
+
 
   useEffect(() => {
-    async function loadReportData() {
-      const dataStream = streamReportData(reportId);
-      
-      for await (const chunk of dataStream) {
-        if (chunk.status === "complete" && chunk.data) {
-          // Initialize all charts as loading
-          const chartIds = new Set<string>();
-          chunk.data.sections.forEach((section: any) => {
-            section.charts.forEach((chart: any) => {
-              chartIds.add(chart.id);
-            });
-          });
-          setLoadingCharts(chartIds);
-          setSections(chunk.data.sections);
-          
-          // Simulate different loading times for each chart
-          chunk.data.sections.forEach((section: any) => {
-            section.charts.forEach((chart: any) => {
-              const delay = Math.random() * 2000 + 1000; // Random delay between 1-3 seconds
-              setTimeout(() => {
-                setLoadingCharts(prev => {
-                  const next = new Set(prev);
-                  next.delete(chart.id);
-                  return next;
-                });
-              }, delay);
-            });
-          });
-        }
-      }
-    }
-    
-    loadReportData();
-  }, [reportId]);
-
-  if (sections.length === 0) {
-    return <ReportSkeleton />;
-  }
+    setSections(datos);
+  }, [datos]);
 
   return (
     <div className="space-y-10">
@@ -65,7 +30,6 @@ export function ReportContent({ reportId }: { reportId: string }) {
               <ReportChart 
                 key={chart.id} 
                 chart={chart} 
-                isLoading={loadingCharts.has(chart.id)}
               />
             ))}
           </div>
@@ -75,7 +39,7 @@ export function ReportContent({ reportId }: { reportId: string }) {
   );
 }
 
-function ReportChart({ chart, isLoading }: { chart: any; isLoading: boolean }) {
+function ReportChart({ chart }: { chart: any;}) {
   const chartTypes = {
     bar: {
       icon: <BarChart3 className="h-5 w-5 text-muted-foreground" />,
@@ -107,13 +71,7 @@ function ReportChart({ chart, isLoading }: { chart: any; isLoading: boolean }) {
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full">
-          {isLoading ? (
-            <div className="h-full w-full flex items-center justify-center bg-muted/10 rounded-md animate-pulse">
-              <Skeleton className="h-full w-full rounded-md" />
-            </div>
-          ) : (
-            <ChartComponent data={chart.data} />
-          )}
+          <ChartComponent data={chart.data} />
         </div>
       </CardContent>
     </Card>

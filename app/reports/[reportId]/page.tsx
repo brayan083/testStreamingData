@@ -19,12 +19,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ReportContent } from "@/components/reports/report-content";
 import { ReportSkeleton } from "@/components/reports/report-skeleton";
 import { fetchReportById } from "@/lib/data";
+import { ReportDataServer } from "@/components/PreReport/report_data_server";
 
 // Add the generateStaticParams function
 export async function generateStaticParams() {
@@ -48,6 +48,7 @@ export default async function ReportPage({
   let report;
   try {
     report = await fetchReportById(params.reportId);
+    // console.log("report", report);
   } catch (error) {
     notFound();
   }
@@ -147,7 +148,7 @@ export default async function ReportPage({
               </TabsList>
               <TabsContent value="report" className="mt-6">
                 <Suspense fallback={<ReportSkeleton />}>
-                  <ReportContent reportId={params.reportId} />
+                  <ReportDataServer reportId={params.reportId} />
                 </Suspense>
               </TabsContent>
               <TabsContent value="data-sources" className="mt-6">
